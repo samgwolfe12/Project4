@@ -200,6 +200,28 @@ void inOrderTraverse(TreeNode* tree)
       inOrderTraverse(tree->right);  // Print right subtree.
     }
 }
+//Helper Function for PreOrderPrint
+void preOrderTraverse(TreeNode* tree) 
+// Prints info member of items in tree in sorted order on screen.
+{
+  if (tree != NULL)
+    {
+      cout << tree->info<<"  ";
+      inOrderTraverse(tree->left);   // Print left subtree.
+      inOrderTraverse(tree->right);  // Print right subtree.
+    }
+}
+
+void postOrderTraverse(TreeNode* tree) 
+// Prints info member of items in tree in sorted order on screen.
+{
+  if (tree != NULL)
+    {
+      inOrderTraverse(tree->left);   // Print left subtree.
+      inOrderTraverse(tree->right);  // Print right subtree.
+      cout << tree->info<<"  ";
+    }
+}
 
 void TreeType::Print() const
 // Calls recursive function inOrderTraverse to print items in the tree.
@@ -210,12 +232,14 @@ void TreeType::PreOrderPrint()const
 {// Implement this function, You may call a helper function
  // Then Remove the following stub statement
   cout << "PreOrderPrint stub has been called\n";
+  preOrderTraverse(root);
 }
 void TreeType::PostOrderPrint() const
 {
   // Implement this function, You may call a helper function
   // Then Remove the following stub statement
   cout << "Post OrderPrint stub has been called\n";
+  postOrderTraverse(root);
 
 }
 void TreeType::PrintAncestors(int value) {
@@ -227,6 +251,7 @@ int  TreeType::GetSuccessor(int value) {
   // Implement this function, You may call a helper function
   // Then Remove the following stub statement
   cout << "GetSuccessor() has been called\n";
+  
   return 0;//you should change this return statement
 }
 // helper function for Mirror Image
@@ -292,5 +317,10 @@ void TreeType::operator=
 void TreeType::LevelOrderPrint()const
 {//Implement this function, you May use a data structure
 	
+}
+
+TreeNode* TreeType::ptrToSuccessor(TreeNode* tree){
+  if(tree->right == NULL){return NULL;}
+  return tree->right;
 }
 	
