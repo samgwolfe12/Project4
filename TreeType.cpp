@@ -247,13 +247,13 @@ void TreeType::PrintAncestors(int value) {
   // Then Remove the following stub statement
   cout << "PrintAncestors() has been called\n";
 }
-int  TreeType::GetSuccessor(int value) {
-  // Implement this function, You may call a helper function
-  // Then Remove the following stub statement
+
+
+int  TreeType::GetSuccessor(int value) { 
   cout << "GetSuccessor() has been called\n";
-  
-  return 0;//you should change this return statement
+   return 0;
 }
+
 // helper function for Mirror Image
 void mirror(TreeNode*& copy, const TreeNode* originalTree)
 // Post: copy is the root of a tree that is a mirror Image of originalTree.
@@ -315,8 +315,21 @@ void TreeType::operator=
 }
 
 void TreeType::LevelOrderPrint()const
-{//Implement this function, you May use a data structure
-	
+{
+  if(root == NULL)
+    return;
+  QueType<TreeNode*> queue;
+  queue.Enqueue(root);
+  while(!queue.IsEmpty()){
+    TreeNode* temp;
+    queue.Dequeue(temp);
+    cout <<temp->info<<" ";
+    if(temp->left!=NULL)
+      queue.Enqueue(temp->left);
+    if(temp->right!= NULL)
+      queue.Enqueue(temp->right);
+  }
+  cout <<"\n";
 }
 
 TreeNode* TreeType::ptrToSuccessor(TreeNode* tree){
