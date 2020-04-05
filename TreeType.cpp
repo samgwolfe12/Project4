@@ -251,7 +251,19 @@ void TreeType::PrintAncestors(int value) {
 
 int  TreeType::GetSuccessor(int value) { 
   cout << "GetSuccessor() has been called\n";
-   return 0;
+  TreeNode* temp = new TreeNode;//This probably the problem
+  temp->info = value;           //Not sure how to get a pointer to node with the value
+  temp = ptrToSuccessor(temp);
+  if(temp == NULL){
+    cout <<"NULL value" <<endl;
+    return 0;
+  }
+  else{
+    cout <<temp->info <<endl;
+    return temp->info;
+  }
+  //return 0;
+  
 }
 
 // helper function for Mirror Image
@@ -314,6 +326,7 @@ void TreeType::operator=
 
 }
 
+  
 void TreeType::LevelOrderPrint()const
 {
   if(root == NULL)
@@ -328,12 +341,41 @@ void TreeType::LevelOrderPrint()const
       queue.Enqueue(temp->left);
     if(temp->right!= NULL)
       queue.Enqueue(temp->right);
+    
   }
   cout <<"\n";
 }
 
+//helper for successor
+TreeNode* GetMin(TreeNode* node) { 
+  TreeNode* temp = node; 
+  while (temp->left != NULL) { 
+    temp = temp->left; 
+  } 
+  return temp; 
+}
+
 TreeNode* TreeType::ptrToSuccessor(TreeNode* tree){
-  if(tree->right == NULL){return NULL;}
-  return tree->right;
+  //if(tree->right == NULL){return NULL;}
+  //return tree->right;
+  if( tree->right != NULL ) 
+    return GetMin(tree->right); 
+  TreeNode* succ = NULL;
+  TreeNode* temp = root;
+  while (temp != NULL) 
+    {
+      cout <<"Temp: " <<temp->info <<endl;
+      if (tree->info < temp->info) 
+        { 
+	  succ = temp; 
+	  temp = temp->left; 
+        } 
+      else if (tree->info > temp->info) 
+	temp = temp->right; 
+      else
+	break; 
+    }
+  cout << "ptrhelper: " <<succ->info <<endl;
+  return succ; 
 }
 	
