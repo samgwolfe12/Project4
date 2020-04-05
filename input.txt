@@ -16,36 +16,8 @@ PrintTree
 Print
 PreOrderPrint
 PostOrderPrint
+InOrderPrint
+LevelOrderPrint
 IsFull
 IsEmpty
-MirrorImage
-GetItem 90
-GetItem 999
-GetItem 15
-GetItem 50
-PrintTree
-PrintTree
-GetLength
-IsEmpty
-GetSuccessor 3
-PrintAncestorsOf 5
-MirrorImage
-DeleteItem 90
-DeleteItem 3
-DeleteItem 100
-Print
-DeleteItem 99
-DeleteItem 5
-DeleteItem 50
-GetLength
-Print
-IsEmpty
-Print
-PrintTree
-MakeEmpty
-IsEmpty
-MakeTree 10 20 30 40 50 60 70 80 90 100
-PrintTree
-MakeEmpty
-Error
 Quit
