@@ -326,16 +326,21 @@ void mirror(TreeNode*& copy, const TreeNode* originalTree)
   if(originalTree != NULL){
     copy = new TreeNode;
     copy->info = originalTree->info;
+    copy->left = NULL;
+    copy->right = NULL;
     mirror(copy->right, originalTree->left);
-    mirror(copy->left,originalTree->right);
+    mirror(copy->left, originalTree->right);
+  }
+  else{
+    copy = NULL;
+    return;
   }
 }
 
 
 void TreeType::mirrorImage(TreeType& t)
 {
-  TreeNode* temp = t.root;
-  mirror(temp, root);
+  mirror(t.root, root);
   // calls the helper function mirror
 }
    
