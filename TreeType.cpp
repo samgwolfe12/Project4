@@ -7,6 +7,7 @@ struct TreeNode
   TreeNode* left;
   TreeNode* right;
 };
+
 TreeType::TreeType()
 {
   root = NULL;
@@ -134,7 +135,7 @@ void TreeType::DeleteItem(ItemType item)
   if (found)
     Delete(root, item);
   else
-    cout << item << "is not in tree\n";
+    cout << item << " is not in tree\n";
 }
 
 
@@ -231,16 +232,15 @@ void TreeType::Print() const
 void TreeType::PreOrderPrint()const
 {// Implement this function, You may call a helper function
  // Then Remove the following stub statement
-  cout << "PreOrderPrint stub has been called\n";
-  preOrderTraverse(root);
+    preOrderTraverse(root);
+    cout <<"\n";
 }
 void TreeType::PostOrderPrint() const
 {
   // Implement this function, You may call a helper function
   // Then Remove the following stub statement
-  cout << "Post OrderPrint stub has been called\n";
   postOrderTraverse(root);
-
+  cout <<"\n";
 }
 void TreeType::PrintAncestors(int value) {
   // Implement this function, You may call a helper function
@@ -280,7 +280,6 @@ void TreeType::PrintAncestors(int value) {
       cout << endl;
     }
   }
-  cout << "PrintAncestors() has been called\n";
 }
 
 TreeNode* find(TreeNode* tree, int value){
@@ -300,24 +299,23 @@ TreeNode* find(TreeNode* tree, int value){
 
 
 int  TreeType::GetSuccessor(int value) { 
-  cout << "GetSuccessor() has been called\n";
+  //  cout << "GetSuccessor() has been called\n";
   bool found = false;
   GetItem(value, found);
-  //TreeNode* temp = new TreeNode;//This probably the problem
-  //temp->info = value;           //Not sure how to get a pointer to node with the value
-  if(found){
+  if(!found)
+    cout << value <<" is not in the tree" <<endl;
+  else{
     TreeNode* temp = find(root, value);
     temp = ptrToSuccessor(temp);
     if(temp == NULL){
-      cout <<"NULL value" <<endl;
-      return 0;
+      cout <<" is NULL" <<endl;
+      return -9999;
     }
     else{
       cout <<temp->info <<endl;
       return temp->info;
     }
   }
-  //return 0
   return 0;
 }
 
@@ -389,25 +387,52 @@ void TreeType::operator=
 
 }
 
-  
+//helper for LevelOrderPrint
+int GetHeight(TreeNode* tree){
+  if (tree == NULL) {
+    return -1;
+  }
+  int left = GetHeight(tree->left);
+  int right = GetHeight(tree->right);
+  if (left > right)
+    return left + 1;
+  else 
+    return right + 1;
+}
+
+//helper for LevelOrderPrint
+void DisplayLevel(TreeNode* tree, int i, int& h);
+
 void TreeType::LevelOrderPrint()const
 {
-  if(root == NULL)
-    return;
-  QueType<TreeNode*> queue;
-  queue.Enqueue(root);
-  while(!queue.IsEmpty()){
-    TreeNode* temp;
-    queue.Dequeue(temp);
-    cout <<temp->info<<" ";
-    if(temp->left!=NULL)
-      queue.Enqueue(temp->left);
-    if(temp->right!= NULL)
-      queue.Enqueue(temp->right);
-    
+  int h = GetHeight(root)+1;
+  int height = h;
+  for(int i = 1;i<=height;i++){
+    DisplayLevel(root,i,h);
+    cout <<"\n";
   }
-  cout <<"\n";
 }
+
+void DisplayLevel(TreeNode* tree, int i, int& h){
+  if(tree == NULL){
+    cout <<"-";
+    return;
+  }
+  if (i == 1){
+    string space;
+    for(int j=0;j<h;j++){
+      space+= " ";
+    }
+    cout <<space;
+    h--;
+    cout <<tree->info << " ";
+  }
+  else if (i > 1) { 
+    DisplayLevel(tree->left, i-1,h); 
+    DisplayLevel(tree->right, i-1,h); 
+  }
+}
+
 
 //helper for successor
 TreeNode* GetMin(TreeNode* node) { 
@@ -427,7 +452,7 @@ TreeNode* TreeType::ptrToSuccessor(TreeNode* tree){
   TreeNode* temp = root;
   while (temp != NULL) 
     {
-      cout <<"Temp: " <<temp->info <<endl;
+      //cout <<"Temp: " <<temp->info <<endl;
       if (tree->info < temp->info) 
         { 
 	  succ = temp; 
@@ -438,7 +463,7 @@ TreeNode* TreeType::ptrToSuccessor(TreeNode* tree){
       else
 	break; 
     }
-  cout << "ptrhelper: " <<succ->info <<endl;
+  //cout << "ptrhelper: " <<succ->info <<endl;
   return succ; 
 }
 	
