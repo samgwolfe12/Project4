@@ -248,33 +248,61 @@ void TreeType::PrintAncestors(int value) {
   cout << "PrintAncestors() has been called\n";
 }
 
+TreeNode* find(TreeNode* tree, int value){
+  if(tree->info == value){
+    return tree;
+  }
+  else if(tree->left == NULL && tree->right == NULL){return NULL;}
+  if(value > tree->info){
+    if(tree->right == NULL){return NULL;}
+    else{return find(tree->right, value);}
+  }
+  else{
+    if(tree->left == NULL){return NULL;}
+    else{return find(tree->left, value);}
+  }
+}
+
 
 int  TreeType::GetSuccessor(int value) { 
   cout << "GetSuccessor() has been called\n";
-  TreeNode* temp = new TreeNode;//This probably the problem
-  temp->info = value;           //Not sure how to get a pointer to node with the value
-  temp = ptrToSuccessor(temp);
-  if(temp == NULL){
-    cout <<"NULL value" <<endl;
-    return 0;
+  bool found = false;
+  GetItem(value, found);
+  //TreeNode* temp = new TreeNode;//This probably the problem
+  //temp->info = value;           //Not sure how to get a pointer to node with the value
+  if(found){
+    TreeNode* temp = find(root, value);
+    temp = ptrToSuccessor(temp);
+    if(temp == NULL){
+      cout <<"NULL value" <<endl;
+      return 0;
+    }
+    else{
+      cout <<temp->info <<endl;
+      return temp->info;
+    }
   }
-  else{
-    cout <<temp->info <<endl;
-    return temp->info;
-  }
-  //return 0;
-  
+  //return 0
+  return 0;
 }
 
 // helper function for Mirror Image
 void mirror(TreeNode*& copy, const TreeNode* originalTree)
 // Post: copy is the root of a tree that is a mirror Image of originalTree.
 {// implement this function
+  if(originalTree != NULL){
+    copy = new TreeNode;
+    copy->info = originalTree->info;
+    mirror(copy->right, originalTree->left);
+    mirror(copy->left,originalTree->right);
+  }
 }
 
 
 void TreeType::mirrorImage(TreeType& t)
 {
+  TreeNode* temp = t.root;
+  mirror(temp, root);
   // calls the helper function mirror
 }
    
