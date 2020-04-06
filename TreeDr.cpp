@@ -97,7 +97,7 @@ int main()
       else if (command == "GetSuccessor")
 	{
 	  inFile >> item;
-	  cout << "Logical successor of "<<item<< " is:\n";
+	  cout << "Logical successor of "<<item<< " is: " <<endl;;
 	  tree.GetSuccessor(item);
 	}
       //13
@@ -137,9 +137,8 @@ int main()
 	  inFile >> length;
 	  for (int i = 0; i < length; i++)
 	    inFile >> array[i];
-	  // After implementing makeTree
-	  // Remove the follwoing comment to call the function
-	  //	  TreeType balancedTree=makeTree(array, length);
+	  TreeType balancedTree=makeTree(array, length);
+	  
 	}
       else
 	cout << "Undefined Command!" << command<<endl;
@@ -150,18 +149,26 @@ int main()
 
   return 0;
 }
+
+void buildTree(TreeType& bt,int arr[],int start, int end, int mid);
 // implement this function
 // you may define and call helper functions.
 // The helper function could be an iterative or a recursive function.
 TreeType& makeTree(int arr[], int size)
 {
   TreeType balancedTree;
-  // Code to add array items in balancedTree
-  //Write your code
-  cout << "MakeTree has been called";
-  //remove this statement from implementation
+  buildTree(balancedTree,arr,0,(size-1),size/2);
   return balancedTree;
 }
+
+void buildTree(TreeType& bt,int arr[],int start, int end, int mid){  
+  bt.PutItem(arr[mid]);
+  int left = mid/2;
+  int right = (end-mid)/2;
+  buildTree(bt,arr,start,(mid-1),left);  
+  buildTree(bt,arr,(mid+1),end,right);  
+   
+ }
 
 
 
