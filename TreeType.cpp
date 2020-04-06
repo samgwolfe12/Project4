@@ -245,6 +245,41 @@ void TreeType::PostOrderPrint() const
 void TreeType::PrintAncestors(int value) {
   // Implement this function, You may call a helper function
   // Then Remove the following stub statement
+  QueType<int> ancestors;
+  TreeNode* temp = root;
+  bool found = false;
+  while(!found){
+    if(temp->info == value){
+      found = true;
+    }
+    else{
+      if(value > temp->info){
+        if(temp->right == NULL){break;}
+        else{
+          ancestors.Enqueue(temp->info);
+          temp = temp ->right;
+        }
+      }
+      else{
+        if(temp->left == NULL){break;}
+        else{
+          ancestors.Enqueue(temp->info);
+          temp = temp ->left;
+        }
+      }
+    }
+  }
+  if(found != false){
+    if(ancestors.IsEmpty()){}
+    else{
+      while(!ancestors.IsEmpty()){
+        int item = 0;
+        ancestors.Dequeue(item);
+        cout << item << " ";
+      }
+      cout << endl;
+    }
+  }
   cout << "PrintAncestors() has been called\n";
 }
 
