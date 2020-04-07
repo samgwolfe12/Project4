@@ -6,7 +6,7 @@
 #include "TreeType.h"
 #include<iostream>
 using namespace std;
-TreeType& makeTree(int arr[], int size);
+TreeType makeTree(int arr[], int size);
 int main()
 {
   string command;        // operation to be executed
@@ -157,25 +157,25 @@ int main()
   return 0;
 }
 
-void buildTree(TreeType& bt,int arr[],int start, int end, int mid);
+void buildTree(TreeType& bt,int arr[],int start, int end);
 // implement this function
 // you may define and call helper functions.
 // The helper function could be an iterative or a recursive function.
-TreeType& makeTree(int arr[], int size)
+TreeType makeTree(int arr[], int size)
 {
   TreeType balancedTree;
-  buildTree(balancedTree,arr,0,(size-1),size-1/2);
+  buildTree(balancedTree,arr,0,(size-1));
+  balancedTree.LevelOrderPrint();
   return balancedTree;
 }
 
-void buildTree(TreeType& bt,int arr[],int start, int end, int mid){  
-  if(start<end){
-    bt.PutItem(arr[mid]);
+void buildTree(TreeType& bt,int arr[],int start, int end){  
+  if(start<=end){
     bt.LevelOrderPrint();
-    int left = mid/2;
-    int right = (end+mid)/2;
-    buildTree(bt,arr,start,(mid-1),left);  
-    buildTree(bt,arr,(mid+1),end,right);  
+    int mid = (start+end)/2;
+    bt.PutItem(arr[mid]);
+    buildTree(bt,arr,start,(mid-1));  
+    buildTree(bt,arr,(mid+1),end);  
   }
  }
 
