@@ -171,6 +171,7 @@ TreeType& makeTree(int arr[], int size)
 void buildTree(TreeType& bt,int arr[],int start, int end, int mid){  
   if(start<end){
     bt.PutItem(arr[mid]);
+    bt.LevelOrderPrint();
     int left = mid/2;
     int right = (end+mid)/2;
     buildTree(bt,arr,start,(mid-1),left);  
