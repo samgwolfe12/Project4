@@ -97,8 +97,14 @@ int main()
       else if (command == "GetSuccessor")
 	{
 	  inFile >> item;
-	  cout << "Logical successor of "<<item<< " is: " <<endl;;
-	  tree.GetSuccessor(item);
+	  cout << "Logical successor of "<<item<< " is: ";
+	  int val = tree.GetSuccessor(item);
+	  if(val == -9999)
+	    cout << "NULL\n" << val <<endl;
+	  else if(val == 9999)
+	    cout <<" Item is not in the tree." <<endl;
+	  else
+	    cout <<val <<endl;
 	}
       //13
       else if (command == "PrintAncestorsOf")
@@ -138,7 +144,8 @@ int main()
 	  for (int i = 0; i < length; i++)
 	    inFile >> array[i];
 	  TreeType balancedTree=makeTree(array, length);
-	  
+	  cout << "balancedTree.LevelOrderPrint()"<<endl;
+	  balancedTree.LevelOrderPrint();
 	}
       else
 	cout << "Undefined Command!" << command<<endl;
@@ -162,12 +169,13 @@ TreeType& makeTree(int arr[], int size)
 }
 
 void buildTree(TreeType& bt,int arr[],int start, int end, int mid){  
-  bt.PutItem(arr[mid]);
-  int left = mid/2;
-  int right = (end-mid)/2;
-  buildTree(bt,arr,start,(mid-1),left);  
-  buildTree(bt,arr,(mid+1),end,right);  
-   
+  if(start<end){
+    bt.PutItem(arr[mid]);
+    int left = mid/2;
+    int right = (end+mid)/2;
+    buildTree(bt,arr,start,(mid-1),left);  
+    buildTree(bt,arr,(mid+1),end,right);  
+  }
  }
 
 
