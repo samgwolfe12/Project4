@@ -27,6 +27,6 @@ public:
   
 private:
   TreeNode* root;
-  TreeNode* ptrToSuccessor(TreeNode* tree);
+  //TreeNode* ptrToSuccessor(TreeNode* tree);
 };
 
