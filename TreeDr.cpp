@@ -164,7 +164,7 @@ void buildTree(TreeType& bt,int arr[],int start, int end, int mid);
 TreeType& makeTree(int arr[], int size)
 {
   TreeType balancedTree;
-  buildTree(balancedTree,arr,0,(size-1),size/2);
+  buildTree(balancedTree,arr,0,(size-1),size-1/2);
   return balancedTree;
 }
 

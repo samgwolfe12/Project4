@@ -16,7 +16,7 @@ TreeType::TreeType()
 TreeType::TreeType(const TreeType& originalTree)
 {
 }
-
+TreeNode* ptrToSuccessor(TreeNode* tree);
 void Destroy(TreeNode*& tree);
 
 TreeType::~TreeType()
@@ -122,7 +122,8 @@ void Insert(TreeNode*& tree, ItemType item)
     Insert(tree->left, item);    // Insert in left subtree.
   else
     Insert(tree->right, item);   // Insert in right subtree.
-} 
+}
+
 void DeleteNode(TreeNode*& tree);
 
 void Delete(TreeNode*& tree, ItemType item);
@@ -181,7 +182,7 @@ void DeleteNode(TreeNode*& tree)
       //tree->info = data;
       //Delete(tree->left, data);  // Delete predecessor node.
       //-----new -----
-      //ptrToSuccessor(tree->right);
+      data = ptrToSuccessor(tree->right)->info;
       tree->info = data;
       Delete(tree->right,data);
     }
@@ -450,7 +451,7 @@ TreeNode* GetMin(TreeNode* node) {
   return temp; 
 }
 
-TreeNode* TreeType::ptrToSuccessor(TreeNode* tree){
+TreeNode* ptrToSuccessor(TreeNode* tree){
   //if(tree->right == NULL){return NULL;}
   //return tree->right;
   if( tree->right != NULL ){
@@ -463,5 +464,4 @@ TreeNode* TreeType::ptrToSuccessor(TreeNode* tree){
   else{
     return NULL;
   } 
-}
-	
+}	
