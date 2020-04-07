@@ -177,9 +177,13 @@ void DeleteNode(TreeNode*& tree)
     }
   else
     {
-      GetPredecessor(tree->left, data);
+      //GetPredecessor(tree->left, data);
+      //tree->info = data;
+      //Delete(tree->left, data);  // Delete predecessor node.
+      //-----new -----
+      //ptrToSuccessor(tree->right);
       tree->info = data;
-      Delete(tree->left, data);  // Delete predecessor node.
+      Delete(tree->right,data);
     }
 }
 //Helper function for DeleteNode
@@ -230,21 +234,18 @@ void TreeType::Print() const
   inOrderTraverse(root);
 }
 void TreeType::PreOrderPrint()const
-{// Implement this function, You may call a helper function
- // Then Remove the following stub statement
+{// Print Preorder
     preOrderTraverse(root);
     cout <<"\n";
 }
 void TreeType::PostOrderPrint() const
 {
-  // Implement this function, You may call a helper function
-  // Then Remove the following stub statement
+  //prints postorder
   postOrderTraverse(root);
   cout <<"\n";
 }
 void TreeType::PrintAncestors(int value) {
-  // Implement this function, You may call a helper function
-  // Then Remove the following stub statement
+  //Printsa all the ancestors of a treeNode containing value
   QueType<int> ancestors;
   TreeNode* temp = root;
   bool found = false;
@@ -283,6 +284,7 @@ void TreeType::PrintAncestors(int value) {
 }
 
 TreeNode* find(TreeNode* tree, int value){
+  //helper function for getSuccessor
   if(tree->info == value){
     return tree;
   }
@@ -298,25 +300,22 @@ TreeNode* find(TreeNode* tree, int value){
 }
 
 
-int  TreeType::GetSuccessor(int value) { 
-  //  cout << "GetSuccessor() has been called\n";
+int TreeType::GetSuccessor(int value) { 
+  // returns the int found at the logical successor node of the value
   bool found = false;
   GetItem(value, found);
   if(!found)
-    cout << value <<" is not in the tree" <<endl;
+    return 9999;
   else{
     TreeNode* temp = find(root, value);
     temp = ptrToSuccessor(temp);
     if(temp == NULL){
-      cout <<" is NULL" <<endl;
       return -9999;
     }
     else{
-      cout <<temp->info <<endl;
       return temp->info;
     }
   }
-  return 0;
 }
 
 // helper function for Mirror Image
@@ -337,7 +336,7 @@ void mirror(TreeNode*& copy, const TreeNode* originalTree)
   }
 }
 
-
+//creates a mirror image of the tree
 void TreeType::mirrorImage(TreeType& t)
 {
   mirror(t.root, root);
@@ -408,6 +407,7 @@ int GetHeight(TreeNode* tree){
 //helper for LevelOrderPrint
 void DisplayLevel(TreeNode* tree, int i, int& h);
 
+//prints level order
 void TreeType::LevelOrderPrint()const
 {
   int h = GetHeight(root)+1;
@@ -418,6 +418,8 @@ void TreeType::LevelOrderPrint()const
   }
 }
 
+//helper for level order
+//prints each individual level
 void DisplayLevel(TreeNode* tree, int i, int& h){
   if(tree == NULL){
     cout <<"-";
@@ -451,24 +453,15 @@ TreeNode* GetMin(TreeNode* node) {
 TreeNode* TreeType::ptrToSuccessor(TreeNode* tree){
   //if(tree->right == NULL){return NULL;}
   //return tree->right;
-  if( tree->right != NULL ) 
-    return GetMin(tree->right); 
-  TreeNode* succ = NULL;
-  TreeNode* temp = root;
-  while (temp != NULL) 
-    {
-      //cout <<"Temp: " <<temp->info <<endl;
-      if (tree->info < temp->info) 
-        { 
-	  succ = temp; 
-	  temp = temp->left; 
-        } 
-      else if (tree->info > temp->info) 
-	temp = temp->right; 
-      else
-	break; 
+  if( tree->right != NULL ){
+    TreeNode* min = GetMin(tree->right);
+    while(min->left!=NULL){
+      min =GetMin(min);
     }
-  //cout << "ptrhelper: " <<succ->info <<endl;
-  return succ; 
+    return min;
+  }
+  else{
+    return NULL;
+  } 
 }
 	
