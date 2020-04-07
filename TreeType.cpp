@@ -16,7 +16,9 @@ TreeType::TreeType()
 TreeType::TreeType(const TreeType& originalTree)
 {
 }
+
 TreeNode* ptrToSuccessor(TreeNode* tree);
+
 void Destroy(TreeNode*& tree);
 
 TreeType::~TreeType()
@@ -182,7 +184,7 @@ void DeleteNode(TreeNode*& tree)
       //tree->info = data;
       //Delete(tree->left, data);  // Delete predecessor node.
       //-----new -----
-      data = ptrToSuccessor(tree->right)->info;
+      data = ptrToSuccessor(tree)->info;
       tree->info = data;
       Delete(tree->right,data);
     }
@@ -444,22 +446,28 @@ void DisplayLevel(TreeNode* tree, int i, int& h){
 
 //helper for successor
 TreeNode* GetMin(TreeNode* node) { 
-  TreeNode* temp = node; 
+  TreeNode* temp = node;
   while (temp->left != NULL) { 
     temp = temp->left; 
   } 
   return temp; 
 }
 
+//returns a ptr to the successor node
 TreeNode* ptrToSuccessor(TreeNode* tree){
   //if(tree->right == NULL){return NULL;}
   //return tree->right;
-  if( tree->right != NULL ){
-    TreeNode* min = GetMin(tree->right);
-    while(min->left!=NULL){
-      min =GetMin(min);
+  if(tree!= NULL){
+    if( tree->right != NULL ){
+      TreeNode* min = GetMin(tree->right);
+      while(min->left!=NULL){
+	min =GetMin(min);
+      }
+      return min;
     }
-    return min;
+    else{
+      return NULL;
+    }
   }
   else{
     return NULL;
